@@ -1,0 +1,113 @@
+aid: linksquares
+name: LinkSquares
+review:
+  question: Does LinkSquares expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-12'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. LinkSquares' public API surface (Analyze
+    and Finalize) is request/response REST over HTTPS with JSON payloads,
+    authenticated with an x-api-key header. There is no documented server-push
+    transport - no WebSocket (wss://) and no SSE - on LinkSquares' own API to
+    model. The only asynchronous element is the two-step document import, where
+    the client PUTs a binary file to a presigned Amazon S3 URL and then polls
+    GET /api/analyze/v1/uploads/{upload_id} for status; that is client-initiated
+    HTTP polling, not a WebSocket. LinkSquares also references webhook-style
+    integration for contract updates, but webhooks are server-to-endpoint HTTP
+    callbacks, not a bidirectional WebSocket, and no webhook endpoint schema is
+    publicly documented.
+findings:
+  summary: |
+    LinkSquares does not publish a documented public WebSocket API. LinkSquares
+    is an AI-powered contract lifecycle management (CLM) platform. Its public
+    REST API is served from https://api.linksquares.com and split into two
+    products, Analyze and Finalize, that share a single API token passed as an
+    x-api-key header. All documented endpoints are request/response REST over
+    HTTPS returning JSON. No realtime, bidirectional, or streaming WebSocket
+    (ws:// or wss://) endpoint is documented anywhere in the LinkSquares API
+    Overview, the Analyze API Sample Use Cases, or the API and SDK Reference
+    Guide. Access is gated to LinkSquares customers; unauthenticated calls to
+    api.linksquares.com return 403.
+  accessModel: |
+    The API is customer/enterprise-gated. API keys are self-managed by
+    Administrator users inside the LinkSquares application and are shared across
+    Analyze and Finalize. There is no public self-service signup for API access;
+    the interactive API reference at developer.linksquares.com is login-walled.
+    User and group provisioning is handled via SCIM 2.0 on the Enterprise tier,
+    not via a public REST user-management API - the SCIM endpoint URL and
+    supported operations are provided during a vendor onboarding call.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.linksquares.com
+      documented: true
+      note: Analyze (/api/analyze/v1 and /api/analyze/v2) and Finalize (/api/finalize) products, x-api-key auth, JSON.
+    - protocol: HTTP Upload (presigned S3 PUT)
+      scheme: https
+      documented: true
+      note: Two-step document import - POST metadata returns a presigned Amazon S3 URL, then PUT the binary file. Poll GET /uploads/{upload_id} for status.
+    - protocol: Webhook
+      scheme: https
+      documented: partial
+      note: LinkSquares references pushing contract status/version updates to external systems; no public webhook endpoint schema is documented. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in LinkSquares' public API documentation as of the review date.
+  endpointsConfirmedRest:
+    - GET    https://api.linksquares.com/api/analyze/v1/me
+    - GET    https://api.linksquares.com/api/analyze/v1/agreements
+    - POST   https://api.linksquares.com/api/analyze/v1/agreements
+    - GET    https://api.linksquares.com/api/analyze/v1/agreements/{agreement_id}
+    - PATCH  https://api.linksquares.com/api/analyze/v2/agreements/{agreement_id}
+    - GET    https://api.linksquares.com/api/analyze/v1/agreements/{agreement_id}/terms
+    - PATCH  https://api.linksquares.com/api/analyze/v2/agreements/{agreement_id}/terms/{term_id}
+    - GET    https://api.linksquares.com/api/analyze/v1/agreements/{agreement_id}/hierarchy
+    - GET    https://api.linksquares.com/api/analyze/v1/agreement_types
+    - POST   https://api.linksquares.com/api/analyze/v1/agreements/{agreement_id}/attachments
+    - GET    https://api.linksquares.com/api/analyze/v2/agreements/{agreement_id}/attachments
+    - GET    https://api.linksquares.com/api/analyze/v2/agreements/{agreement_id}/attachments/{attachment_id}/download
+    - GET    https://api.linksquares.com/api/analyze/v1/uploads/{upload_id}
+  endpointsModeled:
+    - GET    https://api.linksquares.com/api/finalize/v1/templates
+    - GET    https://api.linksquares.com/api/finalize/v1/tasks
+    - GET    https://api.linksquares.com/api/finalize/v1/tasks/{task_id}
+    - PATCH  https://api.linksquares.com/api/finalize/v1/tasks/{task_id}
+    - POST   https://api.linksquares.com/api/finalize/v1/agreements
+  modeledNote: |
+    The Finalize endpoints above are MODELED from the capability-level
+    descriptions in the LinkSquares API Overview (retrieve templates, retrieve
+    and approve tasks, create Draft/Intake/Request agreements). LinkSquares
+    documents these capabilities but the concrete request paths live behind the
+    customer-gated API reference and could not be confirmed from public sources.
+    They are flagged as MODELED in both the OpenAPI and the collections. Request
+    and response schemas for all endpoints (Analyze included) are modeled from
+    documented behavior and cURL examples rather than an official OpenAPI file.
+    SCIM 2.0 user/group provisioning is represented as a gated stub with no
+    modeled endpoints because no path is publicly confirmable.
+sources:
+  - url: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+    type: Documentation
+    note: Product split (Analyze/Finalize), Smart Values/terms/types/tags/hierarchy, import, Finalize templates/tasks/create. All REST. No WebSocket.
+  - url: https://help.linksquares.com/hc/en-us/articles/10849398433559-Analyze-API-Sample-Use-Cases
+    type: APIReference
+    note: Live cURL examples confirming base host, x-api-key header, /me, /agreements, /terms, /hierarchy, /attachments, /uploads, /agreement_types, next_cursor pagination.
+  - url: https://help.linksquares.com/hc/en-us/articles/10575849523735-Managing-API-Keys
+    type: Documentation
+    note: API key must be sent as x-api-key header; keys admin-managed; token shared across Analyze and Finalize; gateway also uses JWT internally.
+  - url: https://help.linksquares.com/hc/en-us/articles/24831343635863-LinkSquares-Service-Integration-User-Authorization-Requirements
+    type: Documentation
+    note: User provisioning via SCIM 2.0 (Enterprise); no public REST user-management API.
+  - url: https://github.com/ak-skill/linksquares-api
+    type: SourceCode
+    note: Third-party agent skill corroborating base host, x-api-key header, and Analyze endpoint paths.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. LinkSquares' public API is
+    request/response REST (Analyze and Finalize) with an x-api-key header, plus a
+    presigned-S3 upload flow polled over HTTP. No AsyncAPI document was created
+    because there is no server-push transport on LinkSquares' own API to model.

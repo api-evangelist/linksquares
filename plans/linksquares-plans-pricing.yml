@@ -1,0 +1,61 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: LinkSquares
+providerId: linksquares
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Contract Management
+- CLM
+- Contracts
+- Legal
+- Plans
+description: >-
+  LinkSquares is sold as enterprise CLM software with quote-based pricing; it
+  does not publish public price points for its products or for API access. The
+  platform is organized around the Analyze (AI contract analysis/repository) and
+  Finalize (drafting, review, and workflow) products, with additional capability
+  tiers such as AI, Analytics, and administration/SSO features. API access and
+  API key management are available to customers, with keys self-managed by
+  Administrator users; SCIM 2.0 user provisioning is an Enterprise-tier feature.
+  All pricing is obtained by contacting LinkSquares sales, so the plan below is
+  an honest, non-reconciled placeholder rather than confirmed price points.
+notes: >-
+  No public pricing is published. Product/tier names reflect LinkSquares'
+  Analyze and Finalize product structure; dollar amounts, packaging, and whether
+  the API carries a separate fee must be confirmed with LinkSquares sales during
+  reconciliation.
+sources:
+- https://linksquares.com/
+- https://linksquares.com/integrations/linksquares-api/
+- https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+plans:
+- id: linksquares-enterprise
+  name: LinkSquares (Contact Sales)
+  type: enterprise
+  description: >-
+    Quote-based CLM subscription covering LinkSquares Analyze and/or Finalize,
+    with capability tiers (AI, Analytics, workflow, administration/SSO) scoped to
+    the customer. Includes access to the LinkSquares API and self-service API key
+    management for Administrator users. Pricing is negotiated per customer.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: LinkSquares Analyze API
+  - name: LinkSquares Finalize API
+  - name: Self-Service API Key Management
+  - name: SCIM 2.0 Provisioning (Enterprise)
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

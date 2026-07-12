@@ -1,0 +1,223 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LinkSquares API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "apikey": {
+        "key": "x-api-key",
+        "value": "{{apiKey}}",
+        "in": "header"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Account", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get the current API user", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.linksquares.com/api/analyze/v1/me" },
+          "docs": "Returns the user the API key is assigned to and server status. Confirmed."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Agreements", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List agreements", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v1/agreements",
+            "params": [
+              { "name": "type", "value": "", "type": "query", "description": "Filter by agreement type name." },
+              { "name": "tag", "value": "", "type": "query", "description": "Filter by agreement tag." },
+              { "name": "next_cursor", "value": "", "type": "query", "description": "Cursor for the next page of results." }
+            ]
+          },
+          "docs": "Lists agreements the API user can view. Cursor pagination via next_cursor. Confirmed."
+        },
+        {
+          "info": { "name": "Create an agreement (step 1 of import)", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.linksquares.com/api/analyze/v1/agreements",
+            "body": { "type": "json", "data": "{\n  \"name\": \"Master Service Agreement 2023\",\n  \"file_name\": \"MSA 2023.pdf\",\n  \"agreement_type\": \"Master Service Agreement\"\n}" }
+          },
+          "docs": "Step 1 of the two-step import: POST metadata and file_name, receive a presigned upload URL, then PUT the binary DOCX/PDF to it. Confirmed."
+        },
+        {
+          "info": { "name": "Retrieve a single agreement", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v1/agreements/:agreement_id",
+            "params": [
+              { "name": "agreement_id", "value": "", "type": "path", "description": "The UUID of the agreement." }
+            ]
+          },
+          "docs": "Retrieves metadata and Smart Values for one agreement. Confirmed."
+        },
+        {
+          "info": { "name": "Update an agreement", "type": "http" },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.linksquares.com/api/analyze/v2/agreements/:agreement_id",
+            "params": [
+              { "name": "agreement_id", "value": "", "type": "path", "description": "The UUID of the agreement." }
+            ],
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Updates fields on an existing agreement. Confirmed (v2)."
+        },
+        {
+          "info": { "name": "Retrieve upload status", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v1/uploads/:upload_id",
+            "params": [
+              { "name": "upload_id", "value": "", "type": "path", "description": "The upload identifier returned by create-agreement." }
+            ]
+          },
+          "docs": "Retrieves the status of a document upload. Confirmed."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Metadata and Smart Values", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Retrieve agreement terms", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v1/agreements/:agreement_id/terms",
+            "params": [
+              { "name": "agreement_id", "value": "", "type": "path", "description": "The UUID of the agreement." }
+            ]
+          },
+          "docs": "Retrieves the terms (Smart Values) for a single agreement. Confirmed."
+        },
+        {
+          "info": { "name": "Update an agreement term", "type": "http" },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.linksquares.com/api/analyze/v2/agreements/:agreement_id/terms/:term_id",
+            "params": [
+              { "name": "agreement_id", "value": "", "type": "path", "description": "The UUID of the agreement." },
+              { "name": "term_id", "value": "", "type": "path", "description": "The identifier of the term / Smart Value." }
+            ],
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Updates a single term (Smart Value) on an agreement. Confirmed (v2)."
+        },
+        {
+          "info": { "name": "Retrieve parent/child hierarchy", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v1/agreements/:agreement_id/hierarchy",
+            "params": [
+              { "name": "agreement_id", "value": "", "type": "path", "description": "The UUID of the agreement." }
+            ]
+          },
+          "docs": "Returns the parent/child hierarchy tree for an agreement. Confirmed."
+        },
+        {
+          "info": { "name": "List agreement types", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.linksquares.com/api/analyze/v1/agreement_types" },
+          "docs": "Lists the agreement types configured in the Analyze environment. Confirmed."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Attachments", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Add an additional attachment", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.linksquares.com/api/analyze/v1/agreements/:agreement_id/attachments",
+            "params": [
+              { "name": "agreement_id", "value": "", "type": "path", "description": "The UUID of the agreement." }
+            ],
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Adds an additional attachment to an agreement. Confirmed (v1)."
+        },
+        {
+          "info": { "name": "List additional attachments", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v2/agreements/:agreement_id/attachments",
+            "params": [
+              { "name": "agreement_id", "value": "", "type": "path", "description": "The UUID of the agreement." }
+            ]
+          },
+          "docs": "Lists the additional attachments on an agreement. Confirmed (v2)."
+        },
+        {
+          "info": { "name": "Download an attachment", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v2/agreements/:agreement_id/attachments/:attachment_id/download",
+            "params": [
+              { "name": "agreement_id", "value": "", "type": "path", "description": "The UUID of the agreement." },
+              { "name": "attachment_id", "value": "", "type": "path", "description": "The identifier of the attachment." }
+            ]
+          },
+          "docs": "Downloads a single attachment on an agreement. Confirmed (v2)."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Finalize (MODELED)", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List Finalize templates", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.linksquares.com/api/finalize/v1/templates" },
+          "docs": "MODELED PATH. Retrieves available Finalize templates. Documented as a capability; path not confirmed."
+        },
+        {
+          "info": { "name": "List Finalize tasks", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.linksquares.com/api/finalize/v1/tasks" },
+          "docs": "MODELED PATH. Retrieves tasks in the environment. Path not confirmed."
+        },
+        {
+          "info": { "name": "Get a Finalize task", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/finalize/v1/tasks/:task_id",
+            "params": [
+              { "name": "task_id", "value": "", "type": "path", "description": "The identifier of the task." }
+            ]
+          },
+          "docs": "MODELED PATH. Retrieves a specific task. Path not confirmed."
+        },
+        {
+          "info": { "name": "Approve a Finalize task", "type": "http" },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.linksquares.com/api/finalize/v1/tasks/:task_id",
+            "params": [
+              { "name": "task_id", "value": "", "type": "path", "description": "The identifier of the task." }
+            ],
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "MODELED PATH. Updates a task status to approved. Path not confirmed."
+        },
+        {
+          "info": { "name": "Create a Finalize agreement", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.linksquares.com/api/finalize/v1/agreements",
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "MODELED PATH. Creates a Draft, Intake, or Request agreement in Finalize. Path not confirmed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

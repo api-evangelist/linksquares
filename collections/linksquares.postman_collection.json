@@ -1,0 +1,223 @@
+{
+  "info": {
+    "name": "LinkSquares API",
+    "description": "Public REST API for the LinkSquares AI-powered contract lifecycle management (CLM) platform, spanning the Analyze and Finalize products. Base URL: https://api.linksquares.com. Every request authenticates with an x-api-key header; the same token is shared across Analyze and Finalize. Analyze endpoints are confirmed against the LinkSquares help center; Finalize endpoints are MODELED from capability-level documentation and require confirmation against the customer-gated API reference.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      { "key": "key", "value": "x-api-key", "type": "string" },
+      { "key": "value", "value": "{{apiKey}}", "type": "string" },
+      { "key": "in", "value": "header", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.linksquares.com", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "Get the current API user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/analyze/v1/me", "host": ["{{baseUrl}}"], "path": ["api", "analyze", "v1", "me"] },
+            "description": "Returns the user the API key is assigned to and server status. Confirmed."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Agreements",
+      "item": [
+        {
+          "name": "List agreements",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/analyze/v1/agreements?type=&tag=&next_cursor=",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "analyze", "v1", "agreements"],
+              "query": [
+                { "key": "type", "value": "" },
+                { "key": "tag", "value": "" },
+                { "key": "next_cursor", "value": "" }
+              ]
+            },
+            "description": "Lists agreements the API user can view. Cursor pagination via next_cursor. Confirmed."
+          }
+        },
+        {
+          "name": "Create an agreement (step 1 of import)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Master Service Agreement 2023\",\n  \"file_name\": \"MSA 2023.pdf\",\n  \"agreement_type\": \"Master Service Agreement\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/analyze/v1/agreements", "host": ["{{baseUrl}}"], "path": ["api", "analyze", "v1", "agreements"] },
+            "description": "Step 1 of the two-step import: POST metadata and file_name, receive a presigned upload URL, then PUT the binary DOCX/PDF to it. Confirmed."
+          }
+        },
+        {
+          "name": "Retrieve a single agreement",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/analyze/v1/agreements/:agreement_id", "host": ["{{baseUrl}}"], "path": ["api", "analyze", "v1", "agreements", ":agreement_id"], "variable": [{ "key": "agreement_id", "value": "" }] },
+            "description": "Retrieves metadata and Smart Values for one agreement. Confirmed."
+          }
+        },
+        {
+          "name": "Update an agreement",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/api/analyze/v2/agreements/:agreement_id", "host": ["{{baseUrl}}"], "path": ["api", "analyze", "v2", "agreements", ":agreement_id"], "variable": [{ "key": "agreement_id", "value": "" }] },
+            "description": "Updates fields on an existing agreement. Confirmed (v2)."
+          }
+        },
+        {
+          "name": "Retrieve upload status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/analyze/v1/uploads/:upload_id", "host": ["{{baseUrl}}"], "path": ["api", "analyze", "v1", "uploads", ":upload_id"], "variable": [{ "key": "upload_id", "value": "" }] },
+            "description": "Retrieves the status of a document upload. Confirmed."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Metadata and Smart Values",
+      "item": [
+        {
+          "name": "Retrieve agreement terms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/analyze/v1/agreements/:agreement_id/terms", "host": ["{{baseUrl}}"], "path": ["api", "analyze", "v1", "agreements", ":agreement_id", "terms"], "variable": [{ "key": "agreement_id", "value": "" }] },
+            "description": "Retrieves the terms (Smart Values) for a single agreement. Confirmed."
+          }
+        },
+        {
+          "name": "Update an agreement term",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/api/analyze/v2/agreements/:agreement_id/terms/:term_id", "host": ["{{baseUrl}}"], "path": ["api", "analyze", "v2", "agreements", ":agreement_id", "terms", ":term_id"], "variable": [{ "key": "agreement_id", "value": "" }, { "key": "term_id", "value": "" }] },
+            "description": "Updates a single term (Smart Value) on an agreement. Confirmed (v2)."
+          }
+        },
+        {
+          "name": "Retrieve parent/child hierarchy",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/analyze/v1/agreements/:agreement_id/hierarchy", "host": ["{{baseUrl}}"], "path": ["api", "analyze", "v1", "agreements", ":agreement_id", "hierarchy"], "variable": [{ "key": "agreement_id", "value": "" }] },
+            "description": "Returns the parent/child hierarchy tree for an agreement. Confirmed."
+          }
+        },
+        {
+          "name": "List agreement types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/analyze/v1/agreement_types", "host": ["{{baseUrl}}"], "path": ["api", "analyze", "v1", "agreement_types"] },
+            "description": "Lists the agreement types configured in the Analyze environment. Confirmed."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attachments",
+      "item": [
+        {
+          "name": "Add an additional attachment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/api/analyze/v1/agreements/:agreement_id/attachments", "host": ["{{baseUrl}}"], "path": ["api", "analyze", "v1", "agreements", ":agreement_id", "attachments"], "variable": [{ "key": "agreement_id", "value": "" }] },
+            "description": "Adds an additional attachment to an agreement. Confirmed (v1)."
+          }
+        },
+        {
+          "name": "List additional attachments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/analyze/v2/agreements/:agreement_id/attachments", "host": ["{{baseUrl}}"], "path": ["api", "analyze", "v2", "agreements", ":agreement_id", "attachments"], "variable": [{ "key": "agreement_id", "value": "" }] },
+            "description": "Lists the additional attachments on an agreement. Confirmed (v2)."
+          }
+        },
+        {
+          "name": "Download an attachment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/analyze/v2/agreements/:agreement_id/attachments/:attachment_id/download", "host": ["{{baseUrl}}"], "path": ["api", "analyze", "v2", "agreements", ":agreement_id", "attachments", ":attachment_id", "download"], "variable": [{ "key": "agreement_id", "value": "" }, { "key": "attachment_id", "value": "" }] },
+            "description": "Downloads a single attachment on an agreement. Confirmed (v2)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finalize (MODELED)",
+      "item": [
+        {
+          "name": "List Finalize templates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/finalize/v1/templates", "host": ["{{baseUrl}}"], "path": ["api", "finalize", "v1", "templates"] },
+            "description": "MODELED PATH. Retrieves available Finalize templates. Documented as a capability; path not confirmed."
+          }
+        },
+        {
+          "name": "List Finalize tasks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/finalize/v1/tasks", "host": ["{{baseUrl}}"], "path": ["api", "finalize", "v1", "tasks"] },
+            "description": "MODELED PATH. Retrieves tasks in the environment. Path not confirmed."
+          }
+        },
+        {
+          "name": "Get a Finalize task",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/finalize/v1/tasks/:task_id", "host": ["{{baseUrl}}"], "path": ["api", "finalize", "v1", "tasks", ":task_id"], "variable": [{ "key": "task_id", "value": "" }] },
+            "description": "MODELED PATH. Retrieves a specific task. Path not confirmed."
+          }
+        },
+        {
+          "name": "Approve a Finalize task",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/api/finalize/v1/tasks/:task_id", "host": ["{{baseUrl}}"], "path": ["api", "finalize", "v1", "tasks", ":task_id"], "variable": [{ "key": "task_id", "value": "" }] },
+            "description": "MODELED PATH. Updates a task status to approved. Path not confirmed."
+          }
+        },
+        {
+          "name": "Create a Finalize agreement",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/api/finalize/v1/agreements", "host": ["{{baseUrl}}"], "path": ["api", "finalize", "v1", "agreements"] },
+            "description": "MODELED PATH. Creates a Draft, Intake, or Request agreement in Finalize. Path not confirmed."
+          }
+        }
+      ]
+    }
+  ]
+}

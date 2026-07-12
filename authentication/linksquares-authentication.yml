@@ -1,0 +1,26 @@
+generated: '2026-07-12'
+method: documented
+source: openapi/linksquares-openapi.yml
+summary:
+  types:
+  - apiKey
+schemes:
+- name: apiKeyAuth
+  type: apiKey
+  in: header
+  parameterName: x-api-key
+  description: >-
+    LinkSquares APIs use API key authentication. The API key is a unique
+    alphanumeric string that identifies your company's data, and it must be
+    included as an `x-api-key` header on every request. The same token is shared
+    across the Analyze and Finalize products and can interact with either
+    application. Behind the gateway, LinkSquares additionally issues JWTs (JSON
+    Web Tokens) as part of request handling, but callers only supply the
+    x-api-key header. Keys are self-managed by Administrator users via the
+    LinkSquares application, are scoped to the managing user account's
+    permissions, and should be treated as secret since access is equivalent to
+    access to your agreements. User and group provisioning is handled separately
+    via SCIM 2.0 on the Enterprise tier.
+  sources:
+  - https://help.linksquares.com/hc/en-us/articles/10575849523735-Managing-API-Keys
+  - https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview

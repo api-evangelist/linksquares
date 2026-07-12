@@ -1,0 +1,50 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: LinkSquares
+providerId: linksquares
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Contract Management
+- CLM
+- Contracts
+- Rate Limiting
+- Quotas
+description: >-
+  LinkSquares publishes a single documented rate limit for its API: 15 requests
+  per second with a burst of 30. Requests above that ceiling receive a "Rate
+  exceeded" error and further calls stop and fail to protect platform
+  performance. The limit is documented in the LinkSquares API Overview and is not
+  broken out per endpoint or per product; it applies across the Analyze and
+  Finalize surfaces that share the same API token.
+notes: >-
+  Numeric limit (15 rps, burst 30) is confirmed from the LinkSquares help
+  center. The exact HTTP status code returned for throttling is not explicitly
+  documented; 429 is the conventional code and is assumed here for the throttled
+  response. Verify current limits in the customer-gated API reference.
+sources:
+- https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+- https://help.linksquares.com/hc/en-us/articles/10849398433559-Analyze-API-Sample-Use-Cases
+responseCodes:
+  throttled: 429
+limits:
+- name: API Requests
+  scope: account
+  metric: requests
+  limit: 15 per second
+  notes: Documented steady-state limit across the LinkSquares API.
+- name: Burst
+  scope: account
+  metric: requests
+  limit: 30
+  notes: Documented short burst ceiling above the steady-state 15 rps.
+policies:
+- name: Rate Exceeded Error
+  description: Requests beyond the limit return a "Rate exceeded" error and subsequent calls stop and fail to protect platform performance.
+- name: Backoff Strategy
+  description: Clients should throttle to 15 rps, implement exponential backoff with jitter, and retry after receiving rate-exceeded responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
