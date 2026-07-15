@@ -134,6 +134,8 @@ apis:
     /api/analyze/v1/me endpoint on the Analyze API returns the identity of the
     user the API key is assigned to.
 common:
+- type: AgenticAccess
+  url: agentic-access/linksquares-agentic-access.yml
 - type: Authentication
   url: authentication/linksquares-authentication.yml
 - type: Website
