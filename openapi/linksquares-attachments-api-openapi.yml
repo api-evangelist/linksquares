@@ -1,0 +1,139 @@
+openapi: 3.0.3
+info:
+  title: LinkSquares Account Attachments API
+  description: 'The LinkSquares API is the public REST API for the LinkSquares AI-powered contract lifecycle management (CLM) platform. It spans two products. Analyze exposes processed agreements plus the metadata, Smart Values, terms, types, tags, and parent/child hierarchy extracted from them, and lets you import DOCX/PDF documents for AI processing. Finalize lets external systems retrieve templates, create draft/intake/request agreements, and retrieve and approve tasks. All requests authenticate with an API key passed as an `x-api-key` header; the same token is shared across Analyze and Finalize. API access is gated to LinkSquares customers and keys are self-managed by Administrator users.
+
+
+    GROUNDING NOTE: The Analyze paths in this document (under /api/analyze) are CONFIRMED against the public LinkSquares API Overview and Analyze API Sample Use Cases help-center articles, including live cURL examples. The Finalize paths (under /api/finalize) are MODELED from the capability-level descriptions in the LinkSquares API Overview - LinkSquares documents that Finalize can retrieve templates, retrieve and approve tasks, and create agreements, but the concrete request paths are behind the customer-gated API reference and must be confirmed before use. Request and response schemas throughout are modeled from documented behavior and examples, not copied from an official OpenAPI definition.'
+  version: '1.0'
+  contact:
+    name: LinkSquares
+    url: https://linksquares.com
+  license:
+    name: Proprietary
+    url: https://linksquares.com/saas-terms-of-service
+servers:
+- url: https://api.linksquares.com
+  description: LinkSquares production API gateway
+security:
+- apiKeyAuth: []
+tags:
+- name: Attachments
+  description: Additional attachments on Analyze agreements (confirmed).
+paths:
+  /api/analyze/v1/agreements/{agreement_id}/attachments:
+    parameters:
+    - $ref: '#/components/parameters/AgreementId'
+    post:
+      operationId: addAgreementAttachment
+      tags:
+      - Attachments
+      summary: Add an additional attachment
+      description: Adds an additional attachment to an agreement. Confirmed (v1).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The created attachment.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/analyze/v2/agreements/{agreement_id}/attachments:
+    parameters:
+    - $ref: '#/components/parameters/AgreementId'
+    get:
+      operationId: listAgreementAttachments
+      tags:
+      - Attachments
+      summary: List additional attachments
+      description: Retrieves the additional attachments on an agreement. Confirmed (v2).
+      responses:
+        '200':
+          description: A list of attachments.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/analyze/v2/agreements/{agreement_id}/attachments/{attachment_id}/download:
+    parameters:
+    - $ref: '#/components/parameters/AgreementId'
+    - name: attachment_id
+      in: path
+      required: true
+      description: The identifier of the attachment.
+      schema:
+        type: string
+    get:
+      operationId: downloadAgreementAttachment
+      tags:
+      - Attachments
+      summary: Download an attachment
+      description: Downloads a single attachment on an agreement. Confirmed (v2).
+      responses:
+        '200':
+          description: The attachment binary or a download reference.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    AgreementId:
+      name: agreement_id
+      in: path
+      required: true
+      description: The unique identifier (UUID) of the agreement.
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: LinkSquares API key passed as an `x-api-key` header on every request. Keys are self-managed by Administrator users and are shared across the Analyze and Finalize products.

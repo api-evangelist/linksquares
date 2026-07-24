@@ -1,0 +1,153 @@
+openapi: 3.0.3
+info:
+  title: LinkSquares Account Metadata and Smart Values API
+  description: 'The LinkSquares API is the public REST API for the LinkSquares AI-powered contract lifecycle management (CLM) platform. It spans two products. Analyze exposes processed agreements plus the metadata, Smart Values, terms, types, tags, and parent/child hierarchy extracted from them, and lets you import DOCX/PDF documents for AI processing. Finalize lets external systems retrieve templates, create draft/intake/request agreements, and retrieve and approve tasks. All requests authenticate with an API key passed as an `x-api-key` header; the same token is shared across Analyze and Finalize. API access is gated to LinkSquares customers and keys are self-managed by Administrator users.
+
+
+    GROUNDING NOTE: The Analyze paths in this document (under /api/analyze) are CONFIRMED against the public LinkSquares API Overview and Analyze API Sample Use Cases help-center articles, including live cURL examples. The Finalize paths (under /api/finalize) are MODELED from the capability-level descriptions in the LinkSquares API Overview - LinkSquares documents that Finalize can retrieve templates, retrieve and approve tasks, and create agreements, but the concrete request paths are behind the customer-gated API reference and must be confirmed before use. Request and response schemas throughout are modeled from documented behavior and examples, not copied from an official OpenAPI definition.'
+  version: '1.0'
+  contact:
+    name: LinkSquares
+    url: https://linksquares.com
+  license:
+    name: Proprietary
+    url: https://linksquares.com/saas-terms-of-service
+servers:
+- url: https://api.linksquares.com
+  description: LinkSquares production API gateway
+security:
+- apiKeyAuth: []
+tags:
+- name: Metadata and Smart Values
+  description: Terms, Smart Values, hierarchy, and agreement types (confirmed).
+paths:
+  /api/analyze/v1/agreements/{agreement_id}/hierarchy:
+    parameters:
+    - $ref: '#/components/parameters/AgreementId'
+    get:
+      operationId: getAgreementHierarchy
+      tags:
+      - Metadata and Smart Values
+      summary: Retrieve parent/child hierarchy
+      description: Returns the parent/child hierarchy tree for a given agreement as an unsorted JSON hash, including the IDs and names of all related agreements and their relationships. Confirmed.
+      responses:
+        '200':
+          description: The hierarchy tree.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/analyze/v1/agreements/{agreement_id}/terms:
+    parameters:
+    - $ref: '#/components/parameters/AgreementId'
+    get:
+      operationId: getAgreementTerms
+      tags:
+      - Metadata and Smart Values
+      summary: Retrieve agreement terms
+      description: Retrieves the terms (Smart Values) extracted for a single agreement. Confirmed.
+      responses:
+        '200':
+          description: The agreement's terms.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/analyze/v2/agreements/{agreement_id}/terms/{term_id}:
+    parameters:
+    - $ref: '#/components/parameters/AgreementId'
+    - name: term_id
+      in: path
+      required: true
+      description: The identifier of the term / Smart Value.
+      schema:
+        type: string
+    patch:
+      operationId: updateAgreementTerm
+      tags:
+      - Metadata and Smart Values
+      summary: Update an agreement term
+      description: Updates the value of a single term (Smart Value) on an agreement. Confirmed (v2).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The updated term.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/analyze/v1/agreement_types:
+    get:
+      operationId: listAgreementTypes
+      tags:
+      - Metadata and Smart Values
+      summary: List agreement types
+      description: Lists the agreement types configured in the Analyze environment. Confirmed.
+      responses:
+        '200':
+          description: A list of agreement types.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    AgreementId:
+      name: agreement_id
+      in: path
+      required: true
+      description: The unique identifier (UUID) of the agreement.
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: LinkSquares API key passed as an `x-api-key` header on every request. Keys are self-managed by Administrator users and are shared across the Analyze and Finalize products.

@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: LinkSquares Account Finalize API
+  description: 'The LinkSquares API is the public REST API for the LinkSquares AI-powered contract lifecycle management (CLM) platform. It spans two products. Analyze exposes processed agreements plus the metadata, Smart Values, terms, types, tags, and parent/child hierarchy extracted from them, and lets you import DOCX/PDF documents for AI processing. Finalize lets external systems retrieve templates, create draft/intake/request agreements, and retrieve and approve tasks. All requests authenticate with an API key passed as an `x-api-key` header; the same token is shared across Analyze and Finalize. API access is gated to LinkSquares customers and keys are self-managed by Administrator users.
+
+
+    GROUNDING NOTE: The Analyze paths in this document (under /api/analyze) are CONFIRMED against the public LinkSquares API Overview and Analyze API Sample Use Cases help-center articles, including live cURL examples. The Finalize paths (under /api/finalize) are MODELED from the capability-level descriptions in the LinkSquares API Overview - LinkSquares documents that Finalize can retrieve templates, retrieve and approve tasks, and create agreements, but the concrete request paths are behind the customer-gated API reference and must be confirmed before use. Request and response schemas throughout are modeled from documented behavior and examples, not copied from an official OpenAPI definition.'
+  version: '1.0'
+  contact:
+    name: LinkSquares
+    url: https://linksquares.com
+  license:
+    name: Proprietary
+    url: https://linksquares.com/saas-terms-of-service
+servers:
+- url: https://api.linksquares.com
+  description: LinkSquares production API gateway
+security:
+- apiKeyAuth: []
+tags:
+- name: Finalize
+  description: Finalize templates, tasks, and agreement creation (MODELED paths).
+paths:
+  /api/finalize/v1/templates:
+    get:
+      operationId: listFinalizeTemplates
+      tags:
+      - Finalize
+      summary: List Finalize templates (MODELED)
+      description: MODELED PATH. Retrieves available Finalize templates and their Agreement Detail Questions and tokens, filterable by Draft, Intake, or Request Form. LinkSquares documents this capability in the API Overview; the exact path is behind the customer-gated API reference and must be confirmed.
+      responses:
+        '200':
+          description: A list of templates.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/finalize/v1/tasks:
+    get:
+      operationId: listFinalizeTasks
+      tags:
+      - Finalize
+      summary: List Finalize tasks (MODELED)
+      description: MODELED PATH. Retrieves the tasks associated with your LinkSquares environment. Documented as a capability; path not confirmed.
+      responses:
+        '200':
+          description: A list of tasks.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/finalize/v1/tasks/{task_id}:
+    parameters:
+    - name: task_id
+      in: path
+      required: true
+      description: The identifier of the task.
+      schema:
+        type: string
+    get:
+      operationId: getFinalizeTask
+      tags:
+      - Finalize
+      summary: Get a Finalize task (MODELED)
+      description: MODELED PATH. Retrieves information about a specific task by ID. Documented as a capability; path not confirmed.
+      responses:
+        '200':
+          description: The requested task.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: approveFinalizeTask
+      tags:
+      - Finalize
+      summary: Approve a Finalize task (MODELED)
+      description: MODELED PATH. Updates the status of a single task to approved. Documented as a capability; path not confirmed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The updated task.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/finalize/v1/agreements:
+    post:
+      operationId: createFinalizeAgreement
+      tags:
+      - Finalize
+      summary: Create a Finalize agreement (MODELED)
+      description: MODELED PATH. Creates a Draft, Intake, or Request agreement in Finalize from a completed template, enabling third-party systems to submit documents for legal review or request/draft agreements. Documented as a capability; path not confirmed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The created Finalize agreement.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: LinkSquares API key passed as an `x-api-key` header on every request. Keys are self-managed by Administrator users and are shared across the Analyze and Finalize products.

@@ -1,0 +1,260 @@
+openapi: 3.0.3
+info:
+  title: LinkSquares Account Agreements API
+  description: 'The LinkSquares API is the public REST API for the LinkSquares AI-powered contract lifecycle management (CLM) platform. It spans two products. Analyze exposes processed agreements plus the metadata, Smart Values, terms, types, tags, and parent/child hierarchy extracted from them, and lets you import DOCX/PDF documents for AI processing. Finalize lets external systems retrieve templates, create draft/intake/request agreements, and retrieve and approve tasks. All requests authenticate with an API key passed as an `x-api-key` header; the same token is shared across Analyze and Finalize. API access is gated to LinkSquares customers and keys are self-managed by Administrator users.
+
+
+    GROUNDING NOTE: The Analyze paths in this document (under /api/analyze) are CONFIRMED against the public LinkSquares API Overview and Analyze API Sample Use Cases help-center articles, including live cURL examples. The Finalize paths (under /api/finalize) are MODELED from the capability-level descriptions in the LinkSquares API Overview - LinkSquares documents that Finalize can retrieve templates, retrieve and approve tasks, and create agreements, but the concrete request paths are behind the customer-gated API reference and must be confirmed before use. Request and response schemas throughout are modeled from documented behavior and examples, not copied from an official OpenAPI definition.'
+  version: '1.0'
+  contact:
+    name: LinkSquares
+    url: https://linksquares.com
+  license:
+    name: Proprietary
+    url: https://linksquares.com/saas-terms-of-service
+servers:
+- url: https://api.linksquares.com
+  description: LinkSquares production API gateway
+security:
+- apiKeyAuth: []
+tags:
+- name: Agreements
+  description: Analyze agreements and document import/upload (confirmed).
+paths:
+  /api/analyze/v1/agreements:
+    get:
+      operationId: listAgreements
+      tags:
+      - Agreements
+      summary: List agreements
+      description: Lists the Analyze agreements the API user has permission to view. Supports filtering by agreement type, tag, and an updated-since date, and uses cursor pagination via a next_cursor value. Confirmed.
+      parameters:
+      - name: type
+        in: query
+        required: false
+        description: Filter results by agreement type name.
+        schema:
+          type: string
+      - name: tag
+        in: query
+        required: false
+        description: Filter results by agreement tag.
+        schema:
+          type: string
+      - name: next_cursor
+        in: query
+        required: false
+        description: Cursor for the next page of results. In documented examples this is also passed as a next_cursor header.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A page of agreements.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgreementList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+    post:
+      operationId: createAgreement
+      tags:
+      - Agreements
+      summary: Create an agreement (step 1 of import)
+      description: First step of the two-step import flow. POSTs the file name and metadata (name, agreement_type, tags, optional parent agreement id) and returns a presigned upload URL on 200 OK. The second step is a PUT of the binary DOCX/PDF to that presigned URL (an Amazon S3 upload; Base64 is not supported). Confirmed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgreementCreateInput'
+      responses:
+        '200':
+          description: Agreement metadata created; presigned upload URL returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgreementUpload'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /api/analyze/v1/agreements/{agreement_id}:
+    parameters:
+    - $ref: '#/components/parameters/AgreementId'
+    get:
+      operationId: getAgreement
+      tags:
+      - Agreements
+      summary: Retrieve a single agreement
+      description: Retrieves the metadata and Smart Values for one processed agreement by its identifier. Confirmed.
+      responses:
+        '200':
+          description: The requested agreement.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agreement'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/analyze/v2/agreements/{agreement_id}:
+    parameters:
+    - $ref: '#/components/parameters/AgreementId'
+    patch:
+      operationId: updateAgreement
+      tags:
+      - Agreements
+      summary: Update an agreement
+      description: Updates fields on an existing agreement. Confirmed (v2).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The updated agreement.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agreement'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/analyze/v1/uploads/{upload_id}:
+    parameters:
+    - name: upload_id
+      in: path
+      required: true
+      description: The identifier of the upload returned by the create-agreement step.
+      schema:
+        type: string
+    get:
+      operationId: getUpload
+      tags:
+      - Agreements
+      summary: Retrieve upload status
+      description: Retrieves the status of an in-progress or completed document upload. Confirmed.
+      responses:
+        '200':
+          description: The upload status.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    AgreementCreateInput:
+      type: object
+      required:
+      - name
+      - file_name
+      properties:
+        name:
+          type: string
+          description: Display name of the agreement.
+        file_name:
+          type: string
+          description: File name of the document being imported (DOCX or PDF).
+        agreement_type:
+          type: string
+          description: The agreement type name.
+        tags:
+          type: array
+          items:
+            type: string
+        parent_id:
+          type: string
+          description: Optional identifier of the parent agreement.
+    AgreementList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Agreement'
+        next_cursor:
+          type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    AgreementUpload:
+      type: object
+      properties:
+        upload_id:
+          type: string
+        upload_url:
+          type: string
+          format: uri
+          description: Presigned URL to PUT the binary document to.
+    Agreement:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        agreement_type:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        smart_values:
+          type: object
+          additionalProperties: true
+        terms:
+          type: object
+          additionalProperties: true
+      additionalProperties: true
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Rate limit exceeded (documented as ~15 requests/second, burst 30); returns a "Rate exceeded" error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    AgreementId:
+      name: agreement_id
+      in: path
+      required: true
+      description: The unique identifier (UUID) of the agreement.
+      schema:
+        type: string
+        format: uuid
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: LinkSquares API key passed as an `x-api-key` header on every request. Keys are self-managed by Administrator users and are shared across the Analyze and Finalize products.
