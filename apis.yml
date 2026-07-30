@@ -15,7 +15,20 @@ description: >-
   as an x-api-key header. API access is gated to LinkSquares customers, and keys
   are self-managed by Administrator users; user and group provisioning is offered
   through SCIM 2.0 on the Enterprise tier rather than a public REST endpoint.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/linksquares.png
 tags:
 - Contract Management
 - Contract Lifecycle Management
@@ -30,88 +43,6 @@ created: '2026-07-12'
 modified: '2026-07-12'
 specificationVersion: '0.19'
 apis:
-- aid: linksquares:linksquares-analyze-agreements-api
-  name: LinkSquares Analyze Agreements API
-  tags:
-  - Agreements
-  - Contracts
-  - Documents
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
-  baseURL: https://api.linksquares.com/api/analyze
-  properties:
-  - url: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
-    type: Documentation
-  - url: https://help.linksquares.com/hc/en-us/articles/10849398433559-Analyze-API-Sample-Use-Cases
-    type: APIReference
-  - url: openapi/linksquares-openapi.yml
-    type: OpenAPI
-  - url: collections/linksquares.postman_collection.json
-    type: PostmanCollection
-  - url: collections/linksquares.opencollection.json
-    type: OpenCollection
-  description: >-
-    List and retrieve processed Analyze agreements, import DOCX/PDF documents
-    into LinkSquares Analyze for AI processing (a two-step create-metadata then
-    PUT-to-presigned-URL upload flow), check upload status, add and download
-    additional attachments, and update agreement fields. Confirmed endpoints
-    include GET /v1/me, GET /v1/agreements, GET /v1/agreements/{agreement_id},
-    POST /v1/agreements, PATCH /v2/agreements/{agreement_id}, POST
-    /v1/agreements/{agreement_id}/attachments, GET
-    /v2/agreements/{agreement_id}/attachments, GET
-    /v2/agreements/{agreement_id}/attachments/{attachment_id}/download, and GET
-    /v1/uploads/{upload_id}.
-- aid: linksquares:linksquares-analyze-metadata-api
-  name: LinkSquares Analyze Metadata and Smart Values API
-  tags:
-  - Metadata
-  - Smart Values
-  - Contract Analytics
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
-  baseURL: https://api.linksquares.com/api/analyze
-  properties:
-  - url: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
-    type: Documentation
-  - url: https://help.linksquares.com/hc/en-us/articles/10849398433559-Analyze-API-Sample-Use-Cases
-    type: APIReference
-  - url: openapi/linksquares-openapi.yml
-    type: OpenAPI
-  - url: collections/linksquares.postman_collection.json
-    type: PostmanCollection
-  - url: collections/linksquares.opencollection.json
-    type: OpenCollection
-  description: >-
-    Retrieve the metadata LinkSquares Analyze extracts from agreements - Smart
-    Values (100+ automatically extracted data points), Terms, Types, Tags, and
-    the parent/child hierarchy - in bulk or per agreement, with Type, Tag, and
-    updated-since date filters for keeping external systems in sync. Confirmed
-    endpoints include GET /v1/agreements/{agreement_id}/terms, PATCH
-    /v2/agreements/{agreement_id}/terms/{term_id}, GET
-    /v1/agreements/{agreement_id}/hierarchy, and GET /v1/agreement_types.
-- aid: linksquares:linksquares-finalize-api
-  name: LinkSquares Finalize Workflow API
-  tags:
-  - Workflows
-  - Templates
-  - Tasks
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
-  baseURL: https://api.linksquares.com/api/finalize
-  properties:
-  - url: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
-    type: Documentation
-  - url: openapi/linksquares-openapi.yml
-    type: OpenAPI
-  description: >-
-    Let external systems collaborate with legal on contracts in LinkSquares
-    Finalize - retrieve available Finalize templates (Draft, Intake, and Request
-    forms) and their Agreement Detail Questions and tokens, create draft, intake,
-    or request agreements from third-party systems, and retrieve and approve
-    tasks associated with your environment. The Finalize surface is documented
-    at the capability level in the LinkSquares API Overview; concrete Finalize
-    endpoint paths in the OpenAPI are MODELED from that description and require
-    confirmation against the customer-gated API reference.
 - aid: linksquares:linksquares-scim-provisioning-api
   name: LinkSquares User and Group Provisioning (SCIM)
   tags:
@@ -119,20 +50,115 @@ apis:
   - Groups
   - SCIM
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://help.linksquares.com/hc/en-us/articles/24831343635863-LinkSquares-Service-Integration-User-Authorization-Requirements
+  humanURL: >-
+    https://help.linksquares.com/hc/en-us/articles/24831343635863-LinkSquares-Service-Integration-User-Authorization-Requirements
   baseURL: https://api.linksquares.com
   properties:
-  - url: https://help.linksquares.com/hc/en-us/articles/24831343635863-LinkSquares-Service-Integration-User-Authorization-Requirements
+  - url: >-
+      https://help.linksquares.com/hc/en-us/articles/24831343635863-LinkSquares-Service-Integration-User-Authorization-Requirements
     type: Documentation
   description: >-
-    User and group lifecycle management is offered through SCIM 2.0
-    provisioning on the Enterprise tier rather than a public REST endpoint.
-    There is no documented public REST user-management API, base path, or
-    published SCIM auth flow; the SCIM endpoint URL and supported operations are
-    provided during a vendor onboarding call. This entry is an honest gated stub
-    - no endpoints are modeled because none are publicly confirmable. The GET
-    /api/analyze/v1/me endpoint on the Analyze API returns the identity of the
-    user the API key is assigned to.
+    User and group lifecycle management is offered through SCIM 2.0 provisioning on the Enterprise tier
+    rather than a public REST endpoint. There is no documented public REST user-management API, base path,
+    or published SCIM auth flow; the SCIM endpoint URL and supported operations are provided during a
+    vendor onboarding call. This entry is an honest gated stub - no endpoints are modeled because none
+    are publicly confirmable. The GET /api/analyze/v1/me endpoint on the Analyze API returns the identity
+    of the user the API key is assigned to.
+- aid: linksquares:linksquares-account-api
+  name: LinkSquares Account API
+  description: Identity and status of the API user (confirmed).
+  humanURL: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+  baseURL: https://api.linksquares.com/api/analyze
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/linksquares-account-api-openapi.yml
+  - type: Documentation
+    url: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+  - type: APIReference
+    url: >-
+      https://help.linksquares.com/hc/en-us/articles/10849398433559-Analyze-API-Sample-Use-Cases
+  - type: PostmanCollection
+    url: collections/linksquares.postman_collection.json
+  - type: OpenCollection
+    url: collections/linksquares.opencollection.json
+- aid: linksquares:linksquares-agreements-api
+  name: LinkSquares Agreements API
+  description: Analyze agreements and document import/upload (confirmed).
+  humanURL: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+  baseURL: https://api.linksquares.com/api/analyze
+  tags:
+  - Agreements
+  properties:
+  - type: OpenAPI
+    url: openapi/linksquares-agreements-api-openapi.yml
+  - type: Documentation
+    url: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+  - type: APIReference
+    url: >-
+      https://help.linksquares.com/hc/en-us/articles/10849398433559-Analyze-API-Sample-Use-Cases
+  - type: PostmanCollection
+    url: collections/linksquares.postman_collection.json
+  - type: OpenCollection
+    url: collections/linksquares.opencollection.json
+- aid: linksquares:linksquares-attachments-api
+  name: LinkSquares Attachments API
+  description: Additional attachments on Analyze agreements (confirmed).
+  humanURL: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+  baseURL: https://api.linksquares.com/api/analyze
+  tags:
+  - Attachments
+  properties:
+  - type: OpenAPI
+    url: openapi/linksquares-attachments-api-openapi.yml
+  - type: Documentation
+    url: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+  - type: APIReference
+    url: >-
+      https://help.linksquares.com/hc/en-us/articles/10849398433559-Analyze-API-Sample-Use-Cases
+  - type: PostmanCollection
+    url: collections/linksquares.postman_collection.json
+  - type: OpenCollection
+    url: collections/linksquares.opencollection.json
+- aid: linksquares:linksquares-finalize-api
+  name: LinkSquares Finalize API
+  description: Finalize templates, tasks, and agreement creation (MODELED paths).
+  humanURL: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+  baseURL: https://api.linksquares.com/api/analyze
+  tags:
+  - Finalize
+  properties:
+  - type: OpenAPI
+    url: openapi/linksquares-finalize-api-openapi.yml
+  - type: Documentation
+    url: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+  - type: APIReference
+    url: >-
+      https://help.linksquares.com/hc/en-us/articles/10849398433559-Analyze-API-Sample-Use-Cases
+  - type: PostmanCollection
+    url: collections/linksquares.postman_collection.json
+  - type: OpenCollection
+    url: collections/linksquares.opencollection.json
+- aid: linksquares:linksquares-metadata-and-smart-values-api
+  name: LinkSquares Metadata and Smart Values API
+  description: Terms, Smart Values, hierarchy, and agreement types (confirmed).
+  humanURL: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+  baseURL: https://api.linksquares.com/api/analyze
+  tags:
+  - Metadata and Smart Values
+  properties:
+  - type: OpenAPI
+    url: openapi/linksquares-metadata-and-smart-values-api-openapi.yml
+  - type: Documentation
+    url: https://help.linksquares.com/hc/en-us/articles/10575707057175-LinkSquares-API-Overview
+  - type: APIReference
+    url: >-
+      https://help.linksquares.com/hc/en-us/articles/10849398433559-Analyze-API-Sample-Use-Cases
+  - type: PostmanCollection
+    url: collections/linksquares.postman_collection.json
+  - type: OpenCollection
+    url: collections/linksquares.opencollection.json
 common:
 - type: AgenticAccess
   url: agentic-access/linksquares-agentic-access.yml
