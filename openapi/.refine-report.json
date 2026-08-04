@@ -1,0 +1,22 @@
+{
+  "provider": "linksquares",
+  "sources": [
+    "linksquares-account-api-openapi.yml",
+    "linksquares-agreements-api-openapi.yml",
+    "linksquares-attachments-api-openapi.yml",
+    "linksquares-finalize-api-openapi.yml",
+    "linksquares-metadata-and-smart-values-api-openapi.yml"
+  ],
+  "outputs": [
+    "linksquares-account-api-openapi.yml",
+    "linksquares-agreements-api-openapi.yml",
+    "linksquares-attachments-api-openapi.yml",
+    "linksquares-finalize-api-openapi.yml",
+    "linksquares-metadata-and-smart-values-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
