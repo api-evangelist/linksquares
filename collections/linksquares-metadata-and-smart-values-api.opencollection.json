@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LinkSquares Account Metadata and Smart Values API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata and Smart Values",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve parent/child hierarchy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v1/agreements/:agreement_id/hierarchy",
+            "params": [
+              {
+                "name": "agreement_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier (UUID) of the agreement."
+              }
+            ]
+          },
+          "docs": "Returns the parent/child hierarchy tree for a given agreement as an unsorted JSON hash, including the IDs and names of all related agreements and their relationships. Confirmed."
+        },
+        {
+          "info": {
+            "name": "Retrieve agreement terms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v1/agreements/:agreement_id/terms",
+            "params": [
+              {
+                "name": "agreement_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier (UUID) of the agreement."
+              }
+            ]
+          },
+          "docs": "Retrieves the terms (Smart Values) extracted for a single agreement. Confirmed."
+        },
+        {
+          "info": {
+            "name": "Update an agreement term",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.linksquares.com/api/analyze/v2/agreements/:agreement_id/terms/:term_id",
+            "params": [
+              {
+                "name": "agreement_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier (UUID) of the agreement."
+              },
+              {
+                "name": "term_id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the term / Smart Value."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the value of a single term (Smart Value) on an agreement. Confirmed (v2)."
+        },
+        {
+          "info": {
+            "name": "List agreement types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v1/agreement_types"
+          },
+          "docs": "Lists the agreement types configured in the Analyze environment. Confirmed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

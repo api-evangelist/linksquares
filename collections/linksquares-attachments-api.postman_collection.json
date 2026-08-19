@@ -1,0 +1,706 @@
+{
+  "item": [
+    {
+      "id": "3040ae39-05ec-4f53-9163-e42b741e4d06",
+      "name": "Attachments",
+      "description": {
+        "content": "Additional attachments on Analyze agreements (confirmed).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c6fe052f-de28-40f7-a286-99d2baef25df",
+          "name": "Add an additional attachment",
+          "request": {
+            "name": "Add an additional attachment",
+            "description": {
+              "content": "Adds an additional attachment to an agreement. Confirmed (v1).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "analyze",
+                "v1",
+                "agreements",
+                ":agreement_id",
+                "attachments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "agreement_id",
+                  "description": "(Required) The unique identifier (UUID) of the agreement."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4c6abb55-fc33-4f2f-ae77-6d0e1da63ae6",
+              "name": "The created attachment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "agreements",
+                    ":agreement_id",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": 4039.101567530385,\n  \"key_1\": 7370.916486197855,\n  \"key_2\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4039.101567530385,\n  \"key_1\": 7370.916486197855,\n  \"key_2\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41f2b0c1-aa53-45ef-948a-069ead338531",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "agreements",
+                    ":agreement_id",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": 4039.101567530385,\n  \"key_1\": 7370.916486197855,\n  \"key_2\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc91fba4-5041-4a51-a20b-3a5067f74099",
+          "name": "List additional attachments",
+          "request": {
+            "name": "List additional attachments",
+            "description": {
+              "content": "Retrieves the additional attachments on an agreement. Confirmed (v2).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "analyze",
+                "v2",
+                "agreements",
+                ":agreement_id",
+                "attachments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "agreement_id",
+                  "description": "(Required) The unique identifier (UUID) of the agreement."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4d0e7a7f-7f07-43aa-9f2a-634fe0b03b8f",
+              "name": "A list of attachments.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v2",
+                    "agreements",
+                    ":agreement_id",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": 7674\n    },\n    {\n      \"key_0\": 4921,\n      \"key_1\": 6654.827995299337,\n      \"key_2\": 7792\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c447468d-20f2-4dff-88e7-610c49d7bae5",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v2",
+                    "agreements",
+                    ":agreement_id",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90fa243a-72b9-490d-b80e-eb819b29e666",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v2",
+                    "agreements",
+                    ":agreement_id",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "31d1340c-5f91-4ba0-8e32-04dccb8014bd",
+          "name": "Download an attachment",
+          "request": {
+            "name": "Download an attachment",
+            "description": {
+              "content": "Downloads a single attachment on an agreement. Confirmed (v2).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "analyze",
+                "v2",
+                "agreements",
+                ":agreement_id",
+                "attachments",
+                ":attachment_id",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "agreement_id",
+                  "description": "(Required) The unique identifier (UUID) of the agreement."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "attachment_id",
+                  "description": "(Required) The identifier of the attachment."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "51c42561-f294-4201-87a1-667bc8f4ce1f",
+              "name": "The attachment binary or a download reference.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v2",
+                    "agreements",
+                    ":agreement_id",
+                    "attachments",
+                    ":attachment_id",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attachment_id",
+                      "description": "(Required) The identifier of the attachment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4135b49d-8360-4885-aefc-d6b08f91e0a2",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v2",
+                    "agreements",
+                    ":agreement_id",
+                    "attachments",
+                    ":attachment_id",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attachment_id",
+                      "description": "(Required) The identifier of the attachment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7231fcd-76c9-494d-b1f6-ca697f27617d",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v2",
+                    "agreements",
+                    ":agreement_id",
+                    "attachments",
+                    ":attachment_id",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attachment_id",
+                      "description": "(Required) The identifier of the attachment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.linksquares.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4805a9c0-3a36-4015-b531-eace7359bf37",
+    "name": "LinkSquares Account Attachments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The LinkSquares API is the public REST API for the LinkSquares AI-powered contract lifecycle management (CLM) platform. It spans two products. Analyze exposes processed agreements plus the metadata, Smart Values, terms, types, tags, and parent/child hierarchy extracted from them, and lets you import DOCX/PDF documents for AI processing. Finalize lets external systems retrieve templates, create draft/intake/request agreements, and retrieve and approve tasks. All requests authenticate with an API key passed as an `x-api-key` header; the same token is shared across Analyze and Finalize. API access is gated to LinkSquares customers and keys are self-managed by Administrator users.\n\nGROUNDING NOTE: The Analyze paths in this document (under /api/analyze) are CONFIRMED against the public LinkSquares API Overview and Analyze API Sample Use Cases help-center articles, including live cURL examples. The Finalize paths (under /api/finalize) are MODELED from the capability-level descriptions in the LinkSquares API Overview - LinkSquares documents that Finalize can retrieve templates, retrieve and approve tasks, and create agreements, but the concrete request paths are behind the customer-gated API reference and must be confirmed before use. Request and response schemas throughout are modeled from documented behavior and examples, not copied from an official OpenAPI definition.\n\nContact Support:\n Name: LinkSquares",
+      "type": "text/plain"
+    }
+  }
+}

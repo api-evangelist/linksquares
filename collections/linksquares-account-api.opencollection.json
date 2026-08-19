@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LinkSquares Account API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the current API user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v1/me"
+          },
+          "docs": "Returns information about the user the API key is assigned to and the status of the server. Confirmed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LinkSquares Account Finalize API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Finalize",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Finalize templates (MODELED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/finalize/v1/templates"
+          },
+          "docs": "MODELED PATH. Retrieves available Finalize templates and their Agreement Detail Questions and tokens, filterable by Draft, Intake, or Request Form. LinkSquares documents this capability in the API Overview; the exact path is behind the customer-gated API reference and must be confirmed."
+        },
+        {
+          "info": {
+            "name": "List Finalize tasks (MODELED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/finalize/v1/tasks"
+          },
+          "docs": "MODELED PATH. Retrieves the tasks associated with your LinkSquares environment. Documented as a capability; path not confirmed."
+        },
+        {
+          "info": {
+            "name": "Get a Finalize task (MODELED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/finalize/v1/tasks/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the task."
+              }
+            ]
+          },
+          "docs": "MODELED PATH. Retrieves information about a specific task by ID. Documented as a capability; path not confirmed."
+        },
+        {
+          "info": {
+            "name": "Approve a Finalize task (MODELED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.linksquares.com/api/finalize/v1/tasks/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the task."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "MODELED PATH. Updates the status of a single task to approved. Documented as a capability; path not confirmed."
+        },
+        {
+          "info": {
+            "name": "Create a Finalize agreement (MODELED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.linksquares.com/api/finalize/v1/agreements",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "MODELED PATH. Creates a Draft, Intake, or Request agreement in Finalize from a completed template, enabling third-party systems to submit documents for legal review or request/draft agreements. Documented as a capability; path not confirmed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

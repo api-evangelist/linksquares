@@ -1,0 +1,1169 @@
+{
+  "item": [
+    {
+      "id": "cef1ac44-fcbc-4b84-9888-9152e0d41840",
+      "name": "Agreements",
+      "description": {
+        "content": "Analyze agreements and document import/upload (confirmed).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7ec969cc-97e7-4f86-b4b7-5cf5e8ba0576",
+          "name": "List agreements",
+          "request": {
+            "name": "List agreements",
+            "description": {
+              "content": "Lists the Analyze agreements the API user has permission to view. Supports filtering by agreement type, tag, and an updated-since date, and uses cursor pagination via a next_cursor value. Confirmed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "analyze",
+                "v1",
+                "agreements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Filter results by agreement type name."
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "Filter results by agreement tag."
+                },
+                {
+                  "disabled": false,
+                  "key": "next_cursor",
+                  "value": "<string>",
+                  "description": "Cursor for the next page of results. In documented examples this is also passed as a next_cursor header."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9043dca9-1969-4e85-98ae-b127bf012f71",
+              "name": "A page of agreements.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "agreements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "next_cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"df440be7-eace-2b31-983d-1545e6773000\",\n      \"name\": \"string\",\n      \"agreement_type\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"smart_values\": {\n        \"key_0\": false\n      },\n      \"terms\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": true,\n        \"key_3\": 7897.202101839455\n      },\n      \"key_0\": 8170,\n      \"key_1\": 8452\n    },\n    {\n      \"id\": \"455707fe-ca93-373d-1529-a3d88432361e\",\n      \"name\": \"string\",\n      \"agreement_type\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"smart_values\": {\n        \"key_0\": 9015.932230608267,\n        \"key_1\": 6708.721962726227,\n        \"key_2\": 5616\n      },\n      \"terms\": {\n        \"key_0\": 1855.6215721399806,\n        \"key_1\": 6055.044765973302,\n        \"key_2\": 1847.7710907141166\n      }\n    }\n  ],\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f984110-dc07-4797-84e9-a500e2449a94",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "agreements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "next_cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb68da37-6bd7-4e41-a196-905cd0dfb04c",
+              "name": "Rate limit exceeded (documented as ~15 requests/second, burst 30); returns a \"Rate exceeded\" error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "agreements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "next_cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ba78c85-48a6-42a9-a213-8202207017e7",
+          "name": "Create an agreement (step 1 of import)",
+          "request": {
+            "name": "Create an agreement (step 1 of import)",
+            "description": {
+              "content": "First step of the two-step import flow. POSTs the file name and metadata (name, agreement_type, tags, optional parent agreement id) and returns a presigned upload URL on 200 OK. The second step is a PUT of the binary DOCX/PDF to that presigned URL (an Amazon S3 upload; Base64 is not supported). Confirmed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "analyze",
+                "v1",
+                "agreements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"agreement_type\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"parent_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "425688f0-f456-4855-98ab-57dd4b87f850",
+              "name": "Agreement metadata created; presigned upload URL returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "agreements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"agreement_type\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"parent_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"upload_id\": \"string\",\n  \"upload_url\": \"https://ZWgWpCcygzVVwlcqvuNkvWGuZ.xzeaMy7lxtxp+dI\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d47e9694-a7db-4abf-92b3-eca06b19950b",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "agreements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"agreement_type\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"parent_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9aed256-86c1-4b90-9bbf-ebb0d37f6a23",
+              "name": "Rate limit exceeded (documented as ~15 requests/second, burst 30); returns a \"Rate exceeded\" error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "agreements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"agreement_type\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"parent_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "737f8b18-e56f-486a-a49a-13b7bdd3c7e1",
+          "name": "Retrieve a single agreement",
+          "request": {
+            "name": "Retrieve a single agreement",
+            "description": {
+              "content": "Retrieves the metadata and Smart Values for one processed agreement by its identifier. Confirmed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "analyze",
+                "v1",
+                "agreements",
+                ":agreement_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "agreement_id",
+                  "description": "(Required) The unique identifier (UUID) of the agreement."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4c56f02a-d507-482f-8e67-e4b92e267016",
+              "name": "The requested agreement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "agreements",
+                    ":agreement_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"2da8be61-07ac-49d0-8bde-65c3c14e9795\",\n  \"name\": \"string\",\n  \"agreement_type\": \"string\",\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"smart_values\": {\n    \"key_0\": \"string\"\n  },\n  \"terms\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa40164e-fe76-4b00-9547-84193ad59441",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "agreements",
+                    ":agreement_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5a2d6e2-bfed-4994-a0f8-7984f9cd2935",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "agreements",
+                    ":agreement_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e0145542-9b5e-48f8-a752-f5b3619af47d",
+          "name": "Update an agreement",
+          "request": {
+            "name": "Update an agreement",
+            "description": {
+              "content": "Updates fields on an existing agreement. Confirmed (v2).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "analyze",
+                "v2",
+                "agreements",
+                ":agreement_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "agreement_id",
+                  "description": "(Required) The unique identifier (UUID) of the agreement."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": \"string\",\n  \"key_1\": 3274\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "36eac849-6022-4e3f-849a-84f2d0c2e562",
+              "name": "The updated agreement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v2",
+                    "agreements",
+                    ":agreement_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"2da8be61-07ac-49d0-8bde-65c3c14e9795\",\n  \"name\": \"string\",\n  \"agreement_type\": \"string\",\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"smart_values\": {\n    \"key_0\": \"string\"\n  },\n  \"terms\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1678c278-c43b-4f6c-bcf1-c0faaa71f3b4",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v2",
+                    "agreements",
+                    ":agreement_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfdbc3c0-b8d7-457f-8da4-55defa2577be",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v2",
+                    "agreements",
+                    ":agreement_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agreement_id",
+                      "description": "(Required) The unique identifier (UUID) of the agreement."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3cd8bac9-370c-4fa3-b3ec-c1d0454da7f2",
+          "name": "Retrieve upload status",
+          "request": {
+            "name": "Retrieve upload status",
+            "description": {
+              "content": "Retrieves the status of an in-progress or completed document upload. Confirmed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "analyze",
+                "v1",
+                "uploads",
+                ":upload_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "upload_id",
+                  "description": "(Required) The identifier of the upload returned by the create-agreement step."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b1718bd1-ff77-4aea-891a-7dbb788df150",
+              "name": "The upload status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "uploads",
+                    ":upload_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "upload_id",
+                      "description": "(Required) The identifier of the upload returned by the create-agreement step."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7258571-4fe5-4267-8695-8d18e80f0112",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "uploads",
+                    ":upload_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "upload_id",
+                      "description": "(Required) The identifier of the upload returned by the create-agreement step."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d60adb2-cad1-4919-8fa9-4276e5d68aad",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "uploads",
+                    ":upload_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "upload_id",
+                      "description": "(Required) The identifier of the upload returned by the create-agreement step."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.linksquares.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9c135c6c-7ec1-41a1-9acc-fc32d21ff4ef",
+    "name": "LinkSquares Account Agreements API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The LinkSquares API is the public REST API for the LinkSquares AI-powered contract lifecycle management (CLM) platform. It spans two products. Analyze exposes processed agreements plus the metadata, Smart Values, terms, types, tags, and parent/child hierarchy extracted from them, and lets you import DOCX/PDF documents for AI processing. Finalize lets external systems retrieve templates, create draft/intake/request agreements, and retrieve and approve tasks. All requests authenticate with an API key passed as an `x-api-key` header; the same token is shared across Analyze and Finalize. API access is gated to LinkSquares customers and keys are self-managed by Administrator users.\n\nGROUNDING NOTE: The Analyze paths in this document (under /api/analyze) are CONFIRMED against the public LinkSquares API Overview and Analyze API Sample Use Cases help-center articles, including live cURL examples. The Finalize paths (under /api/finalize) are MODELED from the capability-level descriptions in the LinkSquares API Overview - LinkSquares documents that Finalize can retrieve templates, retrieve and approve tasks, and create agreements, but the concrete request paths are behind the customer-gated API reference and must be confirmed before use. Request and response schemas throughout are modeled from documented behavior and examples, not copied from an official OpenAPI definition.\n\nContact Support:\n Name: LinkSquares",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LinkSquares Account Agreements API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Agreements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List agreements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v1/agreements",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by agreement type name."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by agreement tag."
+              },
+              {
+                "name": "next_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for the next page of results. In documented examples this is also passed as a next_cursor header."
+              }
+            ]
+          },
+          "docs": "Lists the Analyze agreements the API user has permission to view. Supports filtering by agreement type, tag, and an updated-since date, and uses cursor pagination via a next_cursor value. Confirmed."
+        },
+        {
+          "info": {
+            "name": "Create an agreement (step 1 of import)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.linksquares.com/api/analyze/v1/agreements",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "First step of the two-step import flow. POSTs the file name and metadata (name, agreement_type, tags, optional parent agreement id) and returns a presigned upload URL on 200 OK. The second step is a PUT of the binary DOCX/PDF to that presigned URL (an Amazon S3 upload; Base64 is not supported). Confirmed."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single agreement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v1/agreements/:agreement_id",
+            "params": [
+              {
+                "name": "agreement_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier (UUID) of the agreement."
+              }
+            ]
+          },
+          "docs": "Retrieves the metadata and Smart Values for one processed agreement by its identifier. Confirmed."
+        },
+        {
+          "info": {
+            "name": "Update an agreement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.linksquares.com/api/analyze/v2/agreements/:agreement_id",
+            "params": [
+              {
+                "name": "agreement_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier (UUID) of the agreement."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates fields on an existing agreement. Confirmed (v2)."
+        },
+        {
+          "info": {
+            "name": "Retrieve upload status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.linksquares.com/api/analyze/v1/uploads/:upload_id",
+            "params": [
+              {
+                "name": "upload_id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the upload returned by the create-agreement step."
+              }
+            ]
+          },
+          "docs": "Retrieves the status of an in-progress or completed document upload. Confirmed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

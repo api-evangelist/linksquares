@@ -1,0 +1,179 @@
+{
+  "item": [
+    {
+      "id": "df1ad6f1-def9-4a48-bac8-cc0a3e6af0d5",
+      "name": "Account",
+      "description": {
+        "content": "Identity and status of the API user (confirmed).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "92703a59-b97f-4e94-b4e5-2474e54e5eb6",
+          "name": "Get the current API user",
+          "request": {
+            "name": "Get the current API user",
+            "description": {
+              "content": "Returns information about the user the API key is assigned to and the status of the server. Confirmed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "analyze",
+                "v1",
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "feaca59a-861f-4f7c-befa-cbdd686fd4e3",
+              "name": "Current user and server status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 2486.5930376076662,\n  \"key_1\": 6599\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f501b226-aa07-4d08-aae1-de37ff385727",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analyze",
+                    "v1",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.linksquares.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1232037d-a035-41d9-b032-85c7daf7b132",
+    "name": "LinkSquares Account API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The LinkSquares API is the public REST API for the LinkSquares AI-powered contract lifecycle management (CLM) platform. It spans two products. Analyze exposes processed agreements plus the metadata, Smart Values, terms, types, tags, and parent/child hierarchy extracted from them, and lets you import DOCX/PDF documents for AI processing. Finalize lets external systems retrieve templates, create draft/intake/request agreements, and retrieve and approve tasks. All requests authenticate with an API key passed as an `x-api-key` header; the same token is shared across Analyze and Finalize. API access is gated to LinkSquares customers and keys are self-managed by Administrator users.\n\nGROUNDING NOTE: The Analyze paths in this document (under /api/analyze) are CONFIRMED against the public LinkSquares API Overview and Analyze API Sample Use Cases help-center articles, including live cURL examples. The Finalize paths (under /api/finalize) are MODELED from the capability-level descriptions in the LinkSquares API Overview - LinkSquares documents that Finalize can retrieve templates, retrieve and approve tasks, and create agreements, but the concrete request paths are behind the customer-gated API reference and must be confirmed before use. Request and response schemas throughout are modeled from documented behavior and examples, not copied from an official OpenAPI definition.\n\nContact Support:\n Name: LinkSquares",
+      "type": "text/plain"
+    }
+  }
+}
