@@ -34,6 +34,16 @@ tags:
 - Contract Lifecycle Management
 - CLM
 - Contracts
+- Artificial Intelligence
+- Legal
+- Agreements
+- Document-Management
+- Contract Analytics
+tags_raw:
+- Contract Management
+- Contract Lifecycle Management
+- CLM
+- Contracts
 - AI
 - Legal
 - Agreements
@@ -46,6 +56,10 @@ apis:
 - aid: linksquares:linksquares-scim-provisioning-api
   name: LinkSquares User and Group Provisioning (SCIM)
   tags:
+  - User
+  - Group
+  - SCIM
+  tags_raw:
   - Users
   - Groups
   - SCIM
