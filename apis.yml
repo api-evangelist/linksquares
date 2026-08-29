@@ -15,6 +15,18 @@ description: >-
   as an x-api-key header. API access is gated to LinkSquares customers, and keys
   are self-managed by Administrator users; user and group provisioning is offered
   through SCIM 2.0 on the Enterprise tier rather than a public REST endpoint.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: self-serve
