@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: LinkSquares Account Agreements API
-  description: 'The LinkSquares API is the public REST API for the LinkSquares AI-powered contract lifecycle management (CLM) platform. It spans two products. Analyze exposes processed agreements plus the metadata, Smart Values, terms, types, tags, and parent/child hierarchy extracted from them, and lets you import DOCX/PDF documents for AI processing. Finalize lets external systems retrieve templates, create draft/intake/request agreements, and retrieve and approve tasks. All requests authenticate with an API key passed as an `x-api-key` header; the same token is shared across Analyze and Finalize. API access is gated to LinkSquares customers and keys are self-managed by Administrator users.
-
-
-    GROUNDING NOTE: The Analyze paths in this document (under /api/analyze) are CONFIRMED against the public LinkSquares API Overview and Analyze API Sample Use Cases help-center articles, including live cURL examples. The Finalize paths (under /api/finalize) are MODELED from the capability-level descriptions in the LinkSquares API Overview - LinkSquares documents that Finalize can retrieve templates, retrieve and approve tasks, and create agreements, but the concrete request paths are behind the customer-gated API reference and must be confirmed before use. Request and response schemas throughout are modeled from documented behavior and examples, not copied from an official OpenAPI definition.'
+  title: LinkSquares Agreements API
+  description: The LinkSquares API is the public REST API for the LinkSquares AI-powered contract lifecycle management (CLM) platform.
   version: '1.0'
   contact:
     name: LinkSquares
@@ -156,6 +153,34 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    Agreement:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        agreement_type:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        smart_values:
+          type: object
+          additionalProperties: true
+        terms:
+          type: object
+          additionalProperties: true
+      additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
     AgreementCreateInput:
       type: object
       required:
@@ -178,22 +203,6 @@ components:
         parent_id:
           type: string
           description: Optional identifier of the parent agreement.
-    AgreementList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Agreement'
-        next_cursor:
-          type: string
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
     AgreementUpload:
       type: object
       properties:
@@ -203,27 +212,15 @@ components:
           type: string
           format: uri
           description: Presigned URL to PUT the binary document to.
-    Agreement:
+    AgreementList:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        agreement_type:
-          type: string
-        tags:
+        data:
           type: array
           items:
-            type: string
-        smart_values:
-          type: object
-          additionalProperties: true
-        terms:
-          type: object
-          additionalProperties: true
-      additionalProperties: true
+            $ref: '#/components/schemas/Agreement'
+        next_cursor:
+          type: string
   responses:
     NotFound:
       description: The requested resource was not found.
@@ -231,14 +228,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Rate limit exceeded (documented as ~15 requests/second, burst 30); returns a "Rate exceeded" error.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
+    RateLimited:
+      description: Rate limit exceeded (documented as ~15 requests/second, burst 30); returns a "Rate exceeded" error.
       content:
         application/json:
           schema:
