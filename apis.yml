@@ -49,7 +49,7 @@ tags:
 - Artificial Intelligence
 - Legal
 - Agreements
-- Document-Management
+- Document Management
 - Contract Analytics
 tags_raw:
 - Contract Management
@@ -61,6 +61,7 @@ tags_raw:
 - Agreements
 - Document Management
 - Contract Analytics
+- Document-Management
 created: '2026-07-12'
 modified: '2026-07-12'
 specificationVersion: '0.23'
