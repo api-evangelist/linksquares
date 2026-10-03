@@ -153,37 +153,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    AgreementUpload:
-      type: object
-      properties:
-        upload_id:
-          type: string
-        upload_url:
-          type: string
-          format: uri
-          description: Presigned URL to PUT the binary document to.
-    AgreementCreateInput:
-      type: object
-      required:
-      - name
-      - file_name
-      properties:
-        name:
-          type: string
-          description: Display name of the agreement.
-        file_name:
-          type: string
-          description: File name of the document being imported (DOCX or PDF).
-        agreement_type:
-          type: string
-          description: The agreement type name.
-        tags:
-          type: array
-          items:
-            type: string
-        parent_id:
-          type: string
-          description: Optional identifier of the parent agreement.
     Error:
       type: object
       properties:
@@ -221,6 +190,37 @@ components:
           type: object
           additionalProperties: true
       additionalProperties: true
+    AgreementCreateInput:
+      type: object
+      required:
+      - name
+      - file_name
+      properties:
+        name:
+          type: string
+          description: Display name of the agreement.
+        file_name:
+          type: string
+          description: File name of the document being imported (DOCX or PDF).
+        agreement_type:
+          type: string
+          description: The agreement type name.
+        tags:
+          type: array
+          items:
+            type: string
+        parent_id:
+          type: string
+          description: Optional identifier of the parent agreement.
+    AgreementUpload:
+      type: object
+      properties:
+        upload_id:
+          type: string
+        upload_url:
+          type: string
+          format: uri
+          description: Presigned URL to PUT the binary document to.
   responses:
     NotFound:
       description: The requested resource was not found.
@@ -228,14 +228,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Rate limit exceeded (documented as ~15 requests/second, burst 30); returns a "Rate exceeded" error.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
+    RateLimited:
+      description: Rate limit exceeded (documented as ~15 requests/second, burst 30); returns a "Rate exceeded" error.
       content:
         application/json:
           schema:
