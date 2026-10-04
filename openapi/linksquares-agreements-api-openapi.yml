@@ -152,14 +152,16 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    AgreementId:
+      name: agreement_id
+      in: path
+      required: true
+      description: The unique identifier (UUID) of the agreement.
+      schema:
+        type: string
+        format: uuid
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
     AgreementList:
       type: object
       properties:
@@ -169,27 +171,6 @@ components:
             $ref: '#/components/schemas/Agreement'
         next_cursor:
           type: string
-    Agreement:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        agreement_type:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        smart_values:
-          type: object
-          additionalProperties: true
-        terms:
-          type: object
-          additionalProperties: true
-      additionalProperties: true
     AgreementCreateInput:
       type: object
       required:
@@ -212,6 +193,34 @@ components:
         parent_id:
           type: string
           description: Optional identifier of the parent agreement.
+    Agreement:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        agreement_type:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        smart_values:
+          type: object
+          additionalProperties: true
+        terms:
+          type: object
+          additionalProperties: true
+      additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
     AgreementUpload:
       type: object
       properties:
@@ -228,27 +237,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     RateLimited:
       description: Rate limit exceeded (documented as ~15 requests/second, burst 30); returns a "Rate exceeded" error.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    AgreementId:
-      name: agreement_id
-      in: path
-      required: true
-      description: The unique identifier (UUID) of the agreement.
-      schema:
-        type: string
-        format: uuid
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey
