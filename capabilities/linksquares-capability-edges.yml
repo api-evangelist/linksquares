@@ -1,0 +1,54 @@
+slug: linksquares
+provider: LinkSquares
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Agreements
+  spec_file: linksquares-agreements-api-openapi.yml
+  capability_id: BC-150.10
+  capability_id_l1: BC-150
+  capability_name: Contract Management
+  confidence: 0.92
+  evidence: GET /api/analyze/v1/agreements  listAgreements; POST createAgreement  Create an agreement
+    (step 1 of import)
+  reason: Core CLM surface managing contract/agreement records in an AI contract lifecycle management
+    platform — contract lifecycle management.
+- tag: Finalize
+  spec_file: linksquares-finalize-api-openapi.yml
+  capability_id: BC-150.10
+  capability_id_l1: BC-150
+  capability_name: Contract Management
+  confidence: 0.82
+  evidence: POST /api/finalize/v1/agreements  createFinalizeAgreement  Create a Finalize agreement; PATCH
+    .../tasks/{task_id} approveFinalizeTask
+  reason: Operations create agreements from templates and route approval tasks — contract drafting/execution
+    workflow within a CLM platform, i.e. contract lifecycle management.
+- tag: Metadata and Smart Values
+  spec_file: linksquares-metadata-and-smart-values-api-openapi.yml
+  capability_id: BC-150.10
+  capability_id_l1: BC-150
+  capability_name: Contract Management
+  confidence: 0.78
+  evidence: GET /api/analyze/v1/agreements/{agreement_id}/terms  Retrieve agreement terms; GET /api/analyze/v1/agreement_types  List
+    agreement types
+  reason: Surfaces and updates extracted agreement terms, types and parent/child hierarchy for executed
+    contracts — contract repository/lifecycle metadata rather than generic data management.
+- tag: Attachments
+  spec_file: linksquares-attachments-api-openapi.yml
+  capability_id: BC-150.10
+  capability_id_l1: BC-150
+  capability_name: Contract Management
+  confidence: 0.72
+  evidence: POST /api/analyze/v1/agreements/{agreement_id}/attachments  Add an additional attachment
+  reason: Attachments are supporting documents bound to contract records in the CLM; document-handling
+    plumbing but scoped to the agreement lifecycle, so moderate confidence.

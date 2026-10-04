@@ -187,6 +187,9 @@ apis:
   - type: OpenCollection
     url: collections/linksquares.opencollection.json
 common:
+- type: CapabilityMap
+  url: capabilities/linksquares-capability-edges.yml
+  name: LinkSquares Business Capability Map
 - type: AgenticAccess
   url: agentic-access/linksquares-agentic-access.yml
 - type: Authentication
