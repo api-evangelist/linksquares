@@ -63,7 +63,7 @@ tags_raw:
 - Contract Analytics
 - Document-Management
 created: '2026-07-12'
-modified: '2026-07-12'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: linksquares:linksquares-scim-provisioning-api
@@ -187,6 +187,8 @@ apis:
   - type: OpenCollection
     url: collections/linksquares.opencollection.json
 common:
+- url: https://blog.linksquares.com/rss.xml
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/linksquares-capability-edges.yml
   name: LinkSquares Business Capability Map
