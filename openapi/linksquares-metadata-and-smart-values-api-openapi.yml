@@ -112,6 +112,23 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    AgreementId:
+      name: agreement_id
+      in: path
+      required: true
+      description: The unique identifier (UUID) of the agreement.
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
   responses:
     Unauthorized:
       description: Missing or invalid API key.
@@ -125,23 +142,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-  parameters:
-    AgreementId:
-      name: agreement_id
-      in: path
-      required: true
-      description: The unique identifier (UUID) of the agreement.
-      schema:
-        type: string
-        format: uuid
   securitySchemes:
     apiKeyAuth:
       type: apiKey

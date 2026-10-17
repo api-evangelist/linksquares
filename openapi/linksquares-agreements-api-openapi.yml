@@ -152,16 +152,16 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    AgreementId:
-      name: agreement_id
-      in: path
-      required: true
-      description: The unique identifier (UUID) of the agreement.
-      schema:
-        type: string
-        format: uuid
   schemas:
+    AgreementUpload:
+      type: object
+      properties:
+        upload_id:
+          type: string
+        upload_url:
+          type: string
+          format: uri
+          description: Presigned URL to PUT the binary document to.
     AgreementList:
       type: object
       properties:
@@ -193,6 +193,13 @@ components:
         parent_id:
           type: string
           description: Optional identifier of the parent agreement.
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
     Agreement:
       type: object
       properties:
@@ -214,25 +221,18 @@ components:
           type: object
           additionalProperties: true
       additionalProperties: true
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-    AgreementUpload:
-      type: object
-      properties:
-        upload_id:
-          type: string
-        upload_url:
-          type: string
-          format: uri
-          description: Presigned URL to PUT the binary document to.
+  parameters:
+    AgreementId:
+      name: agreement_id
+      in: path
+      required: true
+      description: The unique identifier (UUID) of the agreement.
+      schema:
+        type: string
+        format: uuid
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/json:
           schema:
@@ -243,8 +243,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
