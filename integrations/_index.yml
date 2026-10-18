@@ -27,7 +27,7 @@
     - connectors/applications/linksquares
     vendor_link: https://www.linksquares.com/
     builder: Fivetran
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: linksquares-slack-own
   label: Slack (own)
