@@ -1,4 +1,4 @@
-# LinkSquares (linksquares)
+# LinkSquares
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,96 +64,127 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-LinkSquares is an AI-powered contract lifecycle management (CLM) platform that helps legal teams draft, review, execute, and analyze agreements. Its public REST API spans two products - **Analyze** (processed agreements plus the metadata, Smart Values, terms, types, tags, and parent/child hierarchy extracted from them, and document import for AI processing) and **Finalize** (retrieve templates, create draft/intake/request agreements, and retrieve and approve tasks so external systems can collaborate with legal without leaving their own tools).
+LinkSquares is an AI-powered contract lifecycle management (CLM) platform that helps legal teams draft, review, execute, and analyze agreements. Its public REST API is split across two products - Analyze, which surfaces processed agreements plus the metadata, Smart Values, terms, types, tags, and parent/child hierarchy extracted from them, and lets you import DOCX/PDF documents for AI processing; and Finalize, which lets external systems retrieve templates, create draft/intake/request agreements, and retrieve and approve tasks so stakeholders can collaborate on contracts without leaving their own tools. A single API token is shared across Analyze and Finalize and is passed as an x-api-key header. API access is gated to LinkSquares customers, and keys are self-managed by Administrator users; user and group provisioning is offered through SCIM 2.0 on the Enterprise tier rather than a public REST endpoint.
 
-## Access model (read first)
+**Areas:** Contract Management · Contract Lifecycle Management · Contracts · Artificial Intelligence · Legal · Agreements · Document Management · Contract Analytics
 
-API access is **customer / enterprise-gated**. There is no public self-service signup for the API.
+## LinkSquares on APIs.io
 
-- **Authentication:** API key sent as an `x-api-key` header on every request. The key is a unique alphanumeric string that identifies your company's data.
-- **Key management:** Keys are self-managed by **Administrator** users inside the LinkSquares application. A single token is shared across Analyze and Finalize and works with either product.
-- **Gated surfaces:** `https://api.linksquares.com` returns `403` without a valid key. The interactive API reference at `developer.linksquares.com` is login-walled.
-- **Users & groups:** provisioned via **SCIM 2.0 on the Enterprise tier**, not a public REST user-management API. The SCIM endpoint and supported operations are provided during a vendor onboarding call.
-- **Base URL:** `https://api.linksquares.com` (Analyze under `/api/analyze/v1` and `/api/analyze/v2`).
+Everything profiled for LinkSquares is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/linksquares/](https://apis.io/providers/linksquares/)** — or go straight to one of the APIs or properties below.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/linksquares/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/linksquares/refs/heads/main/apis.yml)
+### APIs (6)
 
-## Real vs. modeled
+- [LinkSquares User and Group Provisioning (SCIM)](https://apis.io/apis/linksquares/linksquares-scim-provisioning-api/) — User and group lifecycle management is offered through SCIM 2.0 provisioning on the Enterprise tier rather than a public REST endpoint. There is no…
+- [LinkSquares Account API](https://apis.io/apis/linksquares/linksquares-account-api/) — Identity and status of the API user (confirmed).
+- [LinkSquares Agreements API](https://apis.io/apis/linksquares/linksquares-agreements-api/) — Analyze agreements and document import/upload (confirmed).
+- [LinkSquares Attachments API](https://apis.io/apis/linksquares/linksquares-attachments-api/) — Additional attachments on Analyze agreements (confirmed).
+- [LinkSquares Finalize API](https://apis.io/apis/linksquares/linksquares-finalize-api/) — Finalize templates, tasks, and agreement creation (MODELED paths).
+- [LinkSquares Metadata and Smart Values API](https://apis.io/apis/linksquares/linksquares-metadata-and-smart-values-api/) — Terms, Smart Values, hierarchy, and agreement types (confirmed).
 
-- **Analyze endpoints are confirmed** against the public LinkSquares help-center articles (API Overview and Analyze API Sample Use Cases), including live cURL examples.
-- **Finalize endpoints are MODELED** from LinkSquares' capability-level documentation (retrieve templates, retrieve/approve tasks, create agreements). The concrete paths live behind the customer-gated API reference and are flagged `MODELED` in the OpenAPI and collections.
-- Request/response **schemas throughout are modeled** from documented behavior and examples, not copied from an official OpenAPI definition.
-- **SCIM user/group provisioning** is an honest gated stub - no endpoints are modeled because no path is publicly confirmable.
+### Published properties
 
-## Tags
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- Contract Management
-- Contract Lifecycle Management
-- CLM
-- Contracts
-- AI
-- Legal
-- Agreements
-- Document Management
-- Contract Analytics
+#### Agentic access (1)
 
-## Timestamps
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- **Created:** 2026-07-12
-- **Modified:** 2026-07-12
+- [Linksquares Agentic Access](https://apis.io/agentic-access/linksquares/linksquares-agentic-access/)
 
-## APIs
+#### Collections (6)
 
-### LinkSquares Analyze Agreements API
+Postman and Open Collection request collections.
 
-List and retrieve processed Analyze agreements, import DOCX/PDF documents (a two-step create-metadata then PUT-to-presigned-S3-URL flow), check upload status, add and download attachments, and update agreement fields.
+- [LinkSquares API](https://apis.io/collections/linksquares/open-linksquares/)
+- [LinkSquares Account API](https://apis.io/collections/linksquares/open-linksquares-account-api/)
+- [LinkSquares Account Agreements API](https://apis.io/collections/linksquares/open-linksquares-agreements-api/)
+- [LinkSquares Account Attachments API](https://apis.io/collections/linksquares/open-linksquares-attachments-api/)
+- [LinkSquares Account Finalize API](https://apis.io/collections/linksquares/open-linksquares-finalize-api/)
+- [LinkSquares Account Metadata and Smart Values API](https://apis.io/collections/linksquares/open-linksquares-metadata-and-smart-values-api/)
 
-- **Base URL:** `https://api.linksquares.com/api/analyze`
-- **Confirmed:** `GET /v1/me`, `GET /v1/agreements`, `GET /v1/agreements/{agreement_id}`, `POST /v1/agreements`, `PATCH /v2/agreements/{agreement_id}`, `POST /v1/agreements/{agreement_id}/attachments`, `GET /v2/agreements/{agreement_id}/attachments`, `GET /v2/agreements/{agreement_id}/attachments/{attachment_id}/download`, `GET /v1/uploads/{upload_id}`
+#### Security (2)
 
-### LinkSquares Analyze Metadata and Smart Values API
+Authentication, trust centre, and vulnerability disclosure.
 
-Retrieve the metadata LinkSquares Analyze extracts - Smart Values (100+ automatically extracted data points), Terms, Types, Tags, and parent/child hierarchy - in bulk or per agreement, with Type, Tag, and updated-since date filters plus `next_cursor` pagination.
+- [Linksquares Authentication](https://apis.io/security/linksquares/linksquares-authentication/)
+- [Linksquares Domain Security](https://apis.io/security/linksquares/linksquares-domain-security/)
 
-- **Base URL:** `https://api.linksquares.com/api/analyze`
-- **Confirmed:** `GET /v1/agreements/{agreement_id}/terms`, `PATCH /v2/agreements/{agreement_id}/terms/{term_id}`, `GET /v1/agreements/{agreement_id}/hierarchy`, `GET /v1/agreement_types`
+#### Plans and pricing (1)
 
-### LinkSquares Finalize Workflow API (MODELED paths)
+Published plans, tiers and prices.
 
-Let external systems collaborate with legal on contracts in Finalize - retrieve templates (Draft, Intake, Request forms) and their Agreement Detail Questions and tokens, create agreements, and retrieve and approve tasks.
+- [Linksquares Plans Pricing](https://apis.io/plans/linksquares/linksquares-plans-pricing/)
 
-- **Base URL:** `https://api.linksquares.com/api/finalize`
-- **Modeled:** `GET /v1/templates`, `GET /v1/tasks`, `GET /v1/tasks/{task_id}`, `PATCH /v1/tasks/{task_id}`, `POST /v1/agreements`
+#### Rate limits (1)
 
-### LinkSquares User and Group Provisioning (SCIM)
+Published request limits.
 
-User and group lifecycle via SCIM 2.0 on the Enterprise tier. Honest gated stub - no public REST user-management API, base path, or published SCIM auth flow; endpoint details are provided during vendor onboarding. `GET /api/analyze/v1/me` returns the identity of the user the API key is assigned to.
+- [Linksquares Rate Limits](https://apis.io/rate-limits/linksquares/linksquares-rate-limits/)
 
-## Files
+#### FinOps (1)
 
-- [`apis.yml`](apis.yml) - APIs.json 0.19 index
-- [`openapi/linksquares-openapi.yml`](openapi/linksquares-openapi.yml) - OpenAPI 3.0.3 (Analyze confirmed, Finalize modeled)
-- [`collections/linksquares.postman_collection.json`](collections/linksquares.postman_collection.json) - Postman Collection 2.1
-- [`collections/linksquares.opencollection.json`](collections/linksquares.opencollection.json) - Open Collection 1.0
-- [`authentication/linksquares-authentication.yml`](authentication/linksquares-authentication.yml) - x-api-key auth
-- [`plans/linksquares-plans-pricing.yml`](plans/linksquares-plans-pricing.yml) - plans (contact sales, not reconciled)
-- [`rate-limits/linksquares-rate-limits.yml`](rate-limits/linksquares-rate-limits.yml) - 15 rps / burst 30
-- [`finops/linksquares-finops.yml`](finops/linksquares-finops.yml) - FinOps view
-- [`security/linksquares-domain-security.yml`](security/linksquares-domain-security.yml) - live DNS/TLS/HTTP probes
-- [`review.yml`](review.yml) - WebSocket review (answer: false)
+What the API costs to run, by operation.
 
-## Common Properties
+- [Linksquares Finops](https://apis.io/finops/linksquares/linksquares-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://linksquares.com)
 - [Documentation](https://help.linksquares.com/hc/en-us/sections/26436087990551-LinkSquares-APIs-Overview)
-- [Authentication](authentication/linksquares-authentication.yml)
-- [Plans](plans/linksquares-plans-pricing.yml)
-- [Rate Limits](rate-limits/linksquares-rate-limits.yml)
-- [Fin Ops](finops/linksquares-finops.yml)
-- [Domain Security](security/linksquares-domain-security.yml)
-- [LinkedIn](https://www.linkedin.com/company/linksquares)
+- [Sign up](https://help.linksquares.com/hc/en-us/articles/10575849523735-Managing-API-Keys)
+- [Blog](https://blog.linksquares.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 28.7** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 50.6 |
+| Contract governance | 0.0 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 32.1 |
+| Access clarity | 18.4 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.9** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/linksquares/](https://apis.io/providers/linksquares/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for LinkSquares: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/linksquares/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
